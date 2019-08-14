@@ -1,0 +1,30 @@
+body {
+    margin: 40px auto;
+    width: fit-content;
+    height: fit-content
+}
+
+.background {
+    display: inline-block;
+    border: thin solid;
+}
+.calculator {
+    display: grid;
+    grid: repeat(4, 100px) / repeat(4, 100px);
+    grid-area: 2 / 2 / 2 / 2; 
+}
+
+.screen {
+    grid-area: 1 / 1 / 1 / span4;
+}
+
+.numpad {
+    display: grid;
+    grid-area: 2 / 1 / span 4 / span 3;
+    grid: repeat(4, 100px) / repeat(3, 100px);
+}
+
+.operations {
+    display: grid;
+    grid-area: 2 / 4 / span 4/ 4; 
+}

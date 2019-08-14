@@ -17,3 +17,11 @@ function divide (num1, num2) {
 function operate(num1, num2, operation) {
     return operation(num1, num2);
 };
+
+numpad = document.querySelector('.numpad');
+for (i = 0; i < 12; i++) {
+    num = document.createElement('div');
+    num.classList.add('i');
+    num.textContent = i;
+    numpad.appendChild(num);
+};
