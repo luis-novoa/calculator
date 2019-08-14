@@ -22,6 +22,9 @@ numpad = document.querySelector('.numpad');
 for (i = 0; i < 12; i++) {
     num = document.createElement('div');
     num.classList.add('i');
-    num.textContent = i;
     numpad.appendChild(num);
+    numBtn = document.createElement('button')
+    numBtn.classList.add('i');
+    numBtn.innerHTML = i;
+    num.appendChild(numBtn)
 };

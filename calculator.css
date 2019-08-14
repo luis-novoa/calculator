@@ -4,6 +4,11 @@ body {
     height: fit-content
 }
 
+button {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+}
+
 .background {
     display: inline-block;
     border: thin solid;
@@ -26,5 +31,6 @@ body {
 
 .operations {
     display: grid;
-    grid-area: 2 / 4 / span 4/ 4; 
+    grid-area: 2 / 4 / span 4/ 4;
+    grid: repeat(4, 100px) / 100px; 
 }
