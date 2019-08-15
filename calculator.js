@@ -14,6 +14,8 @@ function divide (num1, num2) {
     return num1 / num2;
 };
 
+let pastEquals = 0;
+
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
 for (let i = 0; i < 12; i++) {
@@ -50,6 +52,8 @@ function screenPlay(value) {
         value = value.join('');
         screenNumber.textContent = '';
     } else if ( screenNumber.textContent == 0 && screenNumber.textContent[1] != '.') {
+        screenNumber.textContent = '';
+    } else if (pastEquals == 1) {
         screenNumber.textContent = '';
     };
     screenNumber.textContent += value.toString();
@@ -103,15 +107,15 @@ aditionBtn.addEventListener('click', () => {
     accumulator();
 });
 subtrBtn.addEventListener('click', () => {
-    storedOperationClick = 'subtract';
+    storedOperationClick = subtract;
     accumulator();
 });
 divideBtn.addEventListener('click', () => {
-    storedOperationClick = 'divide';
+    storedOperationClick = divide;
     accumulator();
 });
 multBtn.addEventListener('click', () => {
-    storedOperationClick = 'multiply';
+    storedOperationClick = multiply;
     accumulator();
 });
 
@@ -134,6 +138,7 @@ function equals() {
         number.push(result);
         screenNumber.textContent = result;
         screen.appendChild(screenNumber);
+        pastEquals = 1;
         storedOperation = 0;
         storedNumber1 = 0;
         storedNumber2 = 0;
