@@ -19,7 +19,8 @@ function divide (num1, num2) {
     }
 };
 
-let pastEquals = 0;
+let postEquals = 0;
+let postOperator = 0;
 
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
@@ -57,7 +58,11 @@ for (let i = 0; i < buttons.length; i++) {
             buttons[i].classList.remove('mouseclickBright');
         });
     } else if (buttons[i].textContent == '=') {
-        buttons[i].addEventListener('click', equals);
+        buttons[i].addEventListener('click', () => {
+            postEquals = 1;
+            equals();
+            console.log(postEquals);
+        });
         buttons[i].addEventListener('mouseover', (e) => {
             buttons[i].classList.add('mouseoverBright');
         });
@@ -113,6 +118,7 @@ document.addEventListener('keydown', (e) => {
             case 'Enter':
                 callBtn = document.querySelectorAll('.brightWeirdo');
                 callBtn[0].classList.add('mouseclickBright');
+                postEquals = 1;
                 equals();
                 break;
 
@@ -206,8 +212,8 @@ let number = []; //max: 24
 }; 
 
 // arredondamento de resultados!
-function numberPushResult(x) {
-    if
+/* function numberPushResult(x) {
+    if (x.length <= 25)
     number.forEach((element, index) => {
         if (element == '.') {
             if (index == 23) {
@@ -230,7 +236,7 @@ function numberPushResult(x) {
             }
         }
     });
-}
+} */
 function screenPlay(value) {
     for (i = 0; i < screenNumber.textContent.length; i++){
         if (value == '.' && screenNumber.textContent[i] == '.') {
@@ -245,10 +251,12 @@ function screenPlay(value) {
         screenNumber.textContent = '';
     } else if ( screenNumber.textContent == 0 && screenNumber.textContent[1] != '.') {
         screenNumber.textContent = '';
-    } else if (pastEquals == 1) {
+    } else if (postEquals == 1) {
         clear();
+        postEquals = 0;
         screenNumber.textContent = '';
     };
+    console.log(postEquals);
     value = Array.from(value);
     value.forEach(element => {
         numberPushInput(element);
@@ -258,11 +266,12 @@ function screenPlay(value) {
     }
     screenNumber.textContent += value.join('');
     screen.appendChild(screenNumber);
+    console.log(number)
 }
 
 function clear(){
     number = [];
-    screenNumber.textContent = 0;
+    screenNumber.textContent = '0';
     screen.appendChild(screenNumber);
 }
 
@@ -287,11 +296,10 @@ let storedOperationClick = 0;
 let storedOperation = 0;
 
 function accumulator() {
+    postOperator = 1;
     if (storedOperation == 0){
         storedNumber1 = Number(number.join(''));
         storedOperation = storedOperationClick;
-        console.log(storedOperation);
-        console.log(storedNumber1);
         clear();
     } else {
         equals();
@@ -346,7 +354,6 @@ function equals() {
         console.log(number);
         screenNumber.textContent = result;
         screen.appendChild(screenNumber);
-        pastEquals = 1;
         storedOperation = 0;
         storedNumber1 = 0;
         storedNumber2 = 0;
