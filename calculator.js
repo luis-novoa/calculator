@@ -20,7 +20,7 @@ function operate(num1, num2, operation) {
 
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
-for (i = 0; i < 12; i++) {
+for (let i = 0; i < 12; i++) {
     num = document.createElement('div');
     numpad.appendChild(num);
     numBtn = document.createElement('button')

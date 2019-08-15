@@ -6,6 +6,7 @@ body {
 
 html {
     background: #000000ad;
+    
 }
 
 
@@ -15,9 +16,9 @@ button {
     border: none;
     border-radius: 5px;
     font-size: larger;
+    outline: none;
+    color: #000000c7;
 }
-
-
 
 .background {
     display: inline-block;
@@ -39,6 +40,7 @@ button {
 .screen {
     grid-area: 1 / 1 / 1 / span4;
     background: #ffffffc7;
+    color: #000000c7;
     border-radius: 5px;
     text-align: end;
     padding: 10px 5px;
@@ -73,17 +75,34 @@ button {
     grid-area: 3 / 1 / span 4 / span 3;
     grid: repeat(4, 50px) / repeat(3, 100px);
     grid-gap: 2px 2px;
-    align-content: end;
+    margin-top: auto;
 }
+
+.numpad button:hover{
+    background: rgba(237, 234, 234, 0.96);
+}
+
+.numpad button:active {
+    background: rgba(253, 253, 253, 0.95);
+}
+
 
 .operations {
     display: grid;
     grid-area: 3 / 4 / span 4/ 4;
     grid: repeat(4, 50px) / 100px;
     grid-gap: 2px 2px; 
-    align-content: end;
+    margin-top: auto;
 }
 
 .backspace button, .clear button, .operations button {
     background: #8080803b;
+}
+
+.backspace button:hover, .clear button:hover, .operations button:hover {
+    background: rgba(128, 128, 128, 0.4196078431372549);
+}
+
+.backspace button:active, .clear button:active, .operations button:active {
+    background: rgba(128, 128, 128, 0.52);
 }
