@@ -135,7 +135,9 @@ function equals() {
         clear();
     } else {
         let result = storedOperation(storedNumber1, storedNumber2);
+        result = result.toString();
         number.push(result);
+        console.log(number);
         screenNumber.textContent = result;
         screen.appendChild(screenNumber);
         pastEquals = 1;
