@@ -56,3 +56,13 @@ function clear(){
 
 let clearBtn = document.querySelector('.clear button');
 clearBtn.addEventListener('click', clear);
+
+let backSpace = document.querySelector('.backspace button');
+backSpace.addEventListener('click', () => {
+    number.pop();
+    let array = screenNumber.textContent;
+    array = Array.from(array);
+    array.pop();
+    screenNumber.textContent = array.join('');
+    screen.appendChild(screenNumber);
+})
