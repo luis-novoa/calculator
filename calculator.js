@@ -42,10 +42,22 @@ let screen = document.querySelector('.screen');
 let screenNumber = document.querySelector('p');
 let number = [];
 function screenPlay(value) {
-    if (screenNumber.textContent == 0) { screenNumber.textContent = ''};
+    for (i = 0; i < screenNumber.textContent.length; i++){
+        if (value == '.' && screenNumber.textContent[i] == '.') {
+            return value = '';
+        } 
+    };
+    if (value == '.' && screenNumber.textContent == 0) { 
+        value = ['0', '.'];
+        value = value.join('');
+        screenNumber.textContent = '';
+    } else if ( screenNumber.textContent == 0 && screenNumber.textContent === 0) {
+        screenNumber.textContent = '';
+    };
     screenNumber.textContent += value.toString();
     screen.appendChild(screenNumber);
     number.push(value);
+    console.log(number);
 }
 
 function clear(){
