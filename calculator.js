@@ -18,13 +18,12 @@ function operate(num1, num2, operation) {
     return operation(num1, num2);
 };
 
-numpad = document.querySelector('.numpad');
+let numpad = document.querySelector('.numpad');
+numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
 for (i = 0; i < 12; i++) {
     num = document.createElement('div');
-    num.classList.add('i');
     numpad.appendChild(num);
     numBtn = document.createElement('button')
-    numBtn.classList.add('i');
-    numBtn.innerHTML = i;
+    numBtn.innerHTML = numpad.numbers[i];
     num.appendChild(numBtn)
 };
