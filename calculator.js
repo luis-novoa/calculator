@@ -20,7 +20,7 @@ function divide (num1, num2) {
 };
 
 let pastEquals = 0;
-
+// 48 - 57
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
 for (let i = 0; i < 12; i++) {
@@ -38,10 +38,47 @@ for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', () => {
             screenPlay(buttons[i].textContent);
         });
+
     } else if (buttons[i].textContent == '=') {
         buttons[i].addEventListener('click', equals);
     }
 };
+
+document.addEventListener('keydown', (e) => {
+    if ((e.key >=0 && e.key <= 9) || e.key == '.') {
+        screenPlay(e.key);
+    } else {
+        switch (e.key) {
+            case 'Backspace':
+                backspace();
+                break;
+
+            case 'Enter':
+                equals();
+                break;
+
+            case 'Delete':
+                clear();
+                break;
+            
+            case '/':
+                storeDiv();
+                break;
+            
+            case '*':
+                storeMult();
+                break;
+
+            case '-':
+                storeSub();
+                break;
+            
+            case '+':
+                storeAdd();
+                break;
+        }
+    }
+});
 
 let screen = document.querySelector('.screen');
 let screenNumber = document.querySelector('p');
@@ -73,18 +110,20 @@ function clear(){
     screen.appendChild(screenNumber);
 }
 
-let clearBtn = document.querySelector('.clear button');
-clearBtn.addEventListener('click', clear);
-
-let backSpace = document.querySelector('.backspace button');
-backSpace.addEventListener('click', () => {
+function backspace() {
     number.pop();
     let array = screenNumber.textContent;
     array = Array.from(array);
     array.pop();
     screenNumber.textContent = array.join('');
     screen.appendChild(screenNumber);
-});
+};
+
+let clearBtn = document.querySelector('.clear button');
+clearBtn.addEventListener('click', clear);
+
+let backspaceBtn = document.querySelector('.backspace button');
+backspaceBtn.addEventListener('click', backspace);
 
 let storedNumber1 = 0;
 let storedNumber2 = 0;
@@ -108,33 +147,38 @@ let subtrBtn = document.querySelector('.subtraction button');
 let divideBtn = document.querySelector('.division button');
 let multBtn = document.querySelector('.multiplication button');
 
-aditionBtn.addEventListener('click', () => {
+aditionBtn.addEventListener('click', storeAdd);
+
+function storeAdd() {
     storedOperationClick = add;
     accumulator();
-});
-subtrBtn.addEventListener('click', () => {
+};
+
+subtrBtn.addEventListener('click', storeSub);
+
+function storeSub() {
     storedOperationClick = subtract;
     accumulator();
-});
-divideBtn.addEventListener('click', () => {
+};
+
+divideBtn.addEventListener('click', storeDiv);
+
+function storeDiv() {
     storedOperationClick = divide;
     accumulator();
-});
-multBtn.addEventListener('click', () => {
+};
+
+multBtn.addEventListener('click', storeMult);
+
+function storeMult() {
     storedOperationClick = multiply;
     accumulator();
-});
+};
 
 function equals() {
     storedNumber2 = Number(number.join(''));
     number = [];
-    if (storedOperation == 'divide' && storedNumber2 == 0) {
-        alert('Dividing by zero still is impossible :(');
-        storedOperation = 0;
-        storedNumber1 = 0;
-        storedNumber2 = 0;
-        clear();
-    } else if (storedOperation == 0) {
+    if (storedOperation == 0) {
         storedOperation = 0;
         storedNumber1 = 0;
         storedNumber2 = 0;
