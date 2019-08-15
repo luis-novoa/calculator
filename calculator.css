@@ -78,11 +78,11 @@ button {
     margin-top: auto;
 }
 
-.numpad button:hover{
+.mouseoverBright{
     background: rgba(237, 234, 234, 0.96);
 }
 
-.numpad button:active {
+.mouseclickBright {
     background: rgba(253, 253, 253, 0.95);
 }
 
@@ -95,14 +95,14 @@ button {
     margin-top: auto;
 }
 
-.backspace button, .clear button, .operations button {
+.dark button {
     background: #8080803b;
 }
 
-.backspace button:hover, .clear button:hover, .operations button:hover {
-    background: rgba(128, 128, 128, 0.4196078431372549);
+.mouseoverDark {
+    background: rgba(128, 128, 128, 0.4196078431372549) !important;
 }
 
-.backspace button:active, .clear button:active, .operations button:active {
-    background: rgba(128, 128, 128, 0.52);
+.mouseclickDark {
+    background: rgba(128, 128, 128, 0.52) !important;
 }

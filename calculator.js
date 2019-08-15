@@ -20,15 +20,21 @@ function divide (num1, num2) {
 };
 
 let pastEquals = 0;
-// 48 - 57
+
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
+
 for (let i = 0; i < 12; i++) {
     let num = document.createElement('div');
     numpad.appendChild(num);
-    let numBtn = document.createElement('button')
+    let numBtn = document.createElement('button');
     numBtn.innerHTML = numpad.numbers[i];
-    num.appendChild(numBtn)
+    if (Number(numpad.numbers[i]) >= 0){
+        numBtn.classList.add('btn' + numpad.numbers[i]);
+    } else {
+        numBtn.classList.add('brightWeirdo');
+    }
+    num.appendChild(numBtn);
 };
 
 let buttons = document.querySelectorAll('button');
@@ -38,43 +44,150 @@ for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', () => {
             screenPlay(buttons[i].textContent);
         });
-
+        buttons[i].addEventListener('mouseover', (e) => {
+            buttons[i].classList.add('mouseoverBright');
+        });
+        buttons[i].addEventListener('mouseout', (e) => {
+            buttons[i].classList.remove('mouseoverBright');
+        });
+        buttons[i].addEventListener('mousedown', (e) => {
+            buttons[i].classList.add('mouseclickBright');
+        });
+        buttons[i].addEventListener('mouseup', (e) => {
+            buttons[i].classList.remove('mouseclickBright');
+        });
     } else if (buttons[i].textContent == '=') {
         buttons[i].addEventListener('click', equals);
+        buttons[i].addEventListener('mouseover', (e) => {
+            buttons[i].classList.add('mouseoverBright');
+        });
+        buttons[i].addEventListener('mouseout', (e) => {
+            buttons[i].classList.remove('mouseoverBright');
+        });
+        buttons[i].addEventListener('mousedown', (e) => {
+            buttons[i].classList.add('mouseclickBright');
+        });
+        buttons[i].addEventListener('mouseup', (e) => {
+            buttons[i].classList.remove('mouseclickBright');
+        });
+    } else {
+        buttons[i].addEventListener('mouseover', (e) => {
+            buttons[i].classList.add('mouseoverDark');
+        });
+        buttons[i].addEventListener('mouseout', (e) => {
+            buttons[i].classList.remove('mouseoverDark');
+        });
+        buttons[i].addEventListener('mousedown', (e) => {
+            buttons[i].classList.add('mouseclickDark');
+        });
+        buttons[i].addEventListener('mouseup', (e) => {
+            buttons[i].classList.remove('mouseclickDark');
+        });
     }
 };
 
 document.addEventListener('keydown', (e) => {
-    if ((e.key >=0 && e.key <= 9) || e.key == '.') {
+    let callClass = 0;
+    if (e.key >= 0){
+        callClass = '.btn' + e.key;
+    }
+    let callBtn;
+    if ((e.key >=0 && e.key <= 9)) {
+        callBtn = document.querySelector(callClass);
+        callBtn.classList.add('mouseclickBright');
         screenPlay(e.key);
     } else {
+        callBtn = document.querySelectorAll('.dark button');
         switch (e.key) {
+            case '.':
+                callBtn = document.querySelectorAll('.brightWeirdo');
+                callBtn[1].classList.add('mouseclickBright');
+                screenPlay(e.key);
+                break;
+
             case 'Backspace':
+                callBtn[0].classList.add('mouseclickDark');
                 backspace();
                 break;
 
             case 'Enter':
+                callBtn = document.querySelectorAll('.brightWeirdo');
+                callBtn[0].classList.add('mouseclickBright');
                 equals();
                 break;
 
             case 'Delete':
+                callBtn[1].classList.add('mouseclickDark');
                 clear();
                 break;
             
             case '/':
+                callBtn[2].classList.add('mouseclickDark');
                 storeDiv();
                 break;
             
             case '*':
+                callBtn[3].classList.add('mouseclickDark');
                 storeMult();
                 break;
 
             case '-':
+                callBtn[4].classList.add('mouseclickDark');
                 storeSub();
                 break;
             
             case '+':
+                callBtn[5].classList.add('mouseclickDark');
                 storeAdd();
+                break;
+        }
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    let callClass = 0;
+    if (e.key >= 0){
+        callClass = '.btn' + e.key;
+    }
+    let callBtn;
+    if ((e.key >=0 && e.key <= 9)) {
+        callBtn = document.querySelector(callClass);
+        callBtn.classList.remove('mouseclickBright');
+    } else {
+        callBtn = document.querySelectorAll('.dark button');
+        switch (e.key) {
+            case '.':
+                callBtn = document.querySelectorAll('.brightWeirdo');
+                callBtn[1].classList.remove('mouseclickBright');
+                break;
+
+            case 'Backspace':
+                callBtn[0].classList.remove('mouseclickDark');
+                break;
+
+            case 'Enter':
+                callBtn = document.querySelectorAll('.brightWeirdo');
+                callBtn[0].classList.remove('mouseclickBright');
+                break;
+
+            case 'Delete':
+                callBtn[1].classList.remove('mouseclickDark');
+                break;
+            
+            case '/':
+                callBtn[2].classList.remove('mouseclickDark');
+                break;
+            
+            case '*':
+                callBtn[3].classList.remove('mouseclickDark');
+                break;
+
+            case '-':
+                callBtn[4].classList.remove('mouseclickDark');
+                break;
+            
+            case '+':
+                callBtn[5].classList.remove('mouseclickDark');
                 break;
         }
     }
