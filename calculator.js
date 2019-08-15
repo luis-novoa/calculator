@@ -29,11 +29,10 @@ for (let i = 0; i < buttons.length; i++) {
     let numTest = Number(buttons[i].textContent);
     if (numTest >= 0 || buttons[i].textContent == '.') {
         buttons[i].addEventListener('click', () => {
-            screenPlay(buttons[i].textContent)
+            screenPlay(buttons[i].textContent);
         });
     } else if (buttons[i].textContent == '=') {
         buttons[i].addEventListener('click', equals);
-
     }
 };
 
@@ -56,7 +55,6 @@ function screenPlay(value) {
     screenNumber.textContent += value.toString();
     screen.appendChild(screenNumber);
     number.push(value);
-    console.log(number);
 }
 
 function clear(){
@@ -80,12 +78,15 @@ backSpace.addEventListener('click', () => {
 
 let storedNumber1 = 0;
 let storedNumber2 = 0;
+let storedOperationClick = 0;
 let storedOperation = 0;
 
-function accumulator(operator) {
-    if (storedOperation = 0){
+function accumulator() {
+    if (storedOperation == 0){
         storedNumber1 = Number(number.join(''));
-        storedOperation = operator;
+        storedOperation = storedOperationClick;
+        console.log(storedOperation);
+        console.log(storedNumber1);
         clear();
     } else {
         equals();
@@ -97,10 +98,22 @@ let subtrBtn = document.querySelector('.subtraction button');
 let divideBtn = document.querySelector('.division button');
 let multBtn = document.querySelector('.multiplication button');
 
-aditionBtn.addEventListener('click', accumulator(add));
-subtrBtn.addEventListener('click', accumulator(subtract));
-divideBtn.addEventListener('click', accumulator(divide));
-multBtn.addEventListener('click', accumulator(multiply));
+aditionBtn.addEventListener('click', () => {
+    storedOperationClick = add;
+    accumulator();
+});
+subtrBtn.addEventListener('click', () => {
+    storedOperationClick = 'subtract';
+    accumulator();
+});
+divideBtn.addEventListener('click', () => {
+    storedOperationClick = 'divide';
+    accumulator();
+});
+multBtn.addEventListener('click', () => {
+    storedOperationClick = 'multiply';
+    accumulator();
+});
 
 function equals() {
     storedNumber2 = Number(number.join(''));
