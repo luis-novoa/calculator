@@ -21,9 +21,9 @@ function operate(num1, num2, operation) {
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
 for (let i = 0; i < 12; i++) {
-    num = document.createElement('div');
+    let num = document.createElement('div');
     numpad.appendChild(num);
-    numBtn = document.createElement('button')
+    let numBtn = document.createElement('button')
     numBtn.innerHTML = numpad.numbers[i];
     num.appendChild(numBtn)
 };
@@ -51,7 +51,7 @@ function screenPlay(value) {
         value = ['0', '.'];
         value = value.join('');
         screenNumber.textContent = '';
-    } else if ( screenNumber.textContent == 0 && screenNumber.textContent === 0) {
+    } else if ( screenNumber.textContent == 0 && screenNumber.textContent[1] != '.') {
         screenNumber.textContent = '';
     };
     screenNumber.textContent += value.toString();
@@ -77,4 +77,9 @@ backSpace.addEventListener('click', () => {
     array.pop();
     screenNumber.textContent = array.join('');
     screen.appendChild(screenNumber);
-})
+});
+
+function accumulator(operator) {
+    let storedNumber = Number(number.join(''))
+    console.log(storedNumber);
+}
