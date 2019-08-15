@@ -195,12 +195,49 @@ document.addEventListener('keyup', (e) => {
 
 let screen = document.querySelector('.screen');
 let screenNumber = document.querySelector('p');
-let number = [];
+let number = []; //max: 24
+
+ function numberPushInput(x) {
+    if (number.length < 25) {
+        number.push(x);
+    } else {
+        alert('Number cap reached!');
+    };
+}; 
+
+// arredondamento de resultados!
+function numberPushResult(x) {
+    if
+    number.forEach((element, index) => {
+        if (element == '.') {
+            if (index == 23) {
+                
+                
+            }
+            for (i = number.length; i >= index; i-- ) {
+                let dec = number[i - 1] + '.' + number[i];
+                dec = Number(dec);
+                dec = Math.round(dec);
+                if (dec < 10) {
+                    number.pop();
+                    number.pop();
+                    dec.toString();
+                    number.push(dec);
+                    break;
+                } else {
+                    number.pop();
+                }
+            }
+        }
+    });
+}
 function screenPlay(value) {
     for (i = 0; i < screenNumber.textContent.length; i++){
         if (value == '.' && screenNumber.textContent[i] == '.') {
             return value = '';
-        } 
+        } else if (value == 0 && number == '') {
+            return value = '';
+        };
     };
     if (value == '.' && screenNumber.textContent == 0) { 
         value = ['0', '.'];
@@ -212,9 +249,15 @@ function screenPlay(value) {
         clear();
         screenNumber.textContent = '';
     };
-    screenNumber.textContent += value.toString();
+    value = Array.from(value);
+    value.forEach(element => {
+        numberPushInput(element);
+    });
+    if (number.length == 25) {
+        value = '';
+    }
+    screenNumber.textContent += value.join('');
     screen.appendChild(screenNumber);
-    number.push(value);
 }
 
 function clear(){
@@ -309,4 +352,5 @@ function equals() {
         storedNumber2 = 0;
     }
 }
+
 
