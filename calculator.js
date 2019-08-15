@@ -42,7 +42,7 @@ let screen = document.querySelector('.screen');
 let screenNumber = document.querySelector('p');
 let number = [];
 function screenPlay(value) {
-    if (screenNumber == 0) { screenNumber.textContent = ''};
+    if (screenNumber.textContent == 0) { screenNumber.textContent = ''};
     screenNumber.textContent += value.toString();
     screen.appendChild(screenNumber);
     number.push(value);
