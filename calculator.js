@@ -47,3 +47,12 @@ function screenPlay(value) {
     screen.appendChild(screenNumber);
     number.push(value);
 }
+
+function clear(){
+    number = [];
+    screenNumber.textContent = 0;
+    screen.appendChild(screenNumber);
+}
+
+let clearBtn = document.querySelector('.clear button');
+clearBtn.addEventListener('click', clear);
