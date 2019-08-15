@@ -54,6 +54,7 @@ function screenPlay(value) {
     } else if ( screenNumber.textContent == 0 && screenNumber.textContent[1] != '.') {
         screenNumber.textContent = '';
     } else if (pastEquals == 1) {
+        clear();
         screenNumber.textContent = '';
     };
     screenNumber.textContent += value.toString();
