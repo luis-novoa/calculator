@@ -2,7 +2,7 @@ function add (num1, num2) {
     return num1 + num2;
 };
 
-function substract (num1, num2) {
+function subtract (num1, num2) {
     return num1 - num2;
 };
 
@@ -12,10 +12,6 @@ function multiply (num1, num2) {
 
 function divide (num1, num2) {
     return num1 / num2;
-};
-
-function operate(num1, num2, operation) {
-    return operation(num1, num2);
 };
 
 let numpad = document.querySelector('.numpad');
@@ -35,8 +31,11 @@ for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', () => {
             screenPlay(buttons[i].textContent)
         });
+    } else if (buttons[i].textContent == '=') {
+        buttons[i].addEventListener('click', equals);
+
     }
-}
+};
 
 let screen = document.querySelector('.screen');
 let screenNumber = document.querySelector('p');
@@ -79,7 +78,52 @@ backSpace.addEventListener('click', () => {
     screen.appendChild(screenNumber);
 });
 
+let storedNumber1 = 0;
+let storedNumber2 = 0;
+let storedOperation = 0;
+
 function accumulator(operator) {
-    let storedNumber = Number(number.join(''))
-    console.log(storedNumber);
+    if (storedOperation = 0){
+        storedNumber1 = Number(number.join(''));
+        storedOperation = operator;
+        clear();
+    } else {
+        equals();
+    }
+};
+
+let aditionBtn = document.querySelector('.sum button');
+let subtrBtn = document.querySelector('.subtraction button');
+let divideBtn = document.querySelector('.division button');
+let multBtn = document.querySelector('.multiplication button');
+
+aditionBtn.addEventListener('click', accumulator(add));
+subtrBtn.addEventListener('click', accumulator(subtract));
+divideBtn.addEventListener('click', accumulator(divide));
+multBtn.addEventListener('click', accumulator(multiply));
+
+function equals() {
+    storedNumber2 = Number(number.join(''));
+    number = [];
+    if (storedOperation == 'divide' && storedNumber2 == 0) {
+        alert('Dividing by zero still is impossible :(');
+        storedOperation = 0;
+        storedNumber1 = 0;
+        storedNumber2 = 0;
+        clear();
+    } else if (storedOperation == 0) {
+        storedOperation = 0;
+        storedNumber1 = 0;
+        storedNumber2 = 0;
+        clear();
+    } else {
+        let result = storedOperation(storedNumber1, storedNumber2);
+        number.push(result);
+        screenNumber.textContent = result;
+        screen.appendChild(screenNumber);
+        storedOperation = 0;
+        storedNumber1 = 0;
+        storedNumber2 = 0;
+    }
 }
+
