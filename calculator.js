@@ -241,19 +241,23 @@ let number = []; //max: 24
                     screen.appendChild(screenNumber);
                 };*/
 function screenPlay(value) {
-    for (i = 0; i < screenNumber.textContent.length; i++){
-        if (value == '.' && screenNumber.textContent[i] == '.') {
+    for (i = 0; i < number.length; i++){
+        if (value == '.' && number[i] == '.') {
             return value = '';
         } else if (value == 0 && number == '') {
-            return value = '';
+            value = '';
+            screenNumber.textContent = 0;
+            screen.appendChild(screenNumber);
         };
     };
-    if (value == '.' && screenNumber.textContent == 0) { 
+    if (value == '.' && number == '') { 
         value = ['0', '.'];
         value = value.join('');
         screenNumber.textContent = '';
-    } else if ( screenNumber.textContent == 0 && screenNumber.textContent[1] != '.') {
-        screenNumber.textContent = '';
+    } else if ( value == 0 && number[0] == 0 && number[1] != '.') {
+        value = '';
+        screenNumber.textContent = 0;
+        screen.appendChild(screenNumber);
     }
     value = Array.from(value);
     value.forEach(element => {
@@ -304,18 +308,17 @@ let storedOperation = 0;
 let storedResult = 0;
 
 function accumulator() {
-    storedOperation = storedOperationClick;
-    storedOperationClick = 0;
-    if (storedResult == 0){
+    storedNumber1 = 0;
+    storedNumber2 = 0;
+    if (number != 0){
         storedNumber1 = Number(number.join(''));
         number=[];
-        screenNumber.textContent = '0';
+        screenNumber.textContent = storedNumber1;
         screen.appendChild(screenNumber);
     } else {
         storedNumber1 = storedResult;
-        number=[];
-        equals();
     }
+    console.log(storedOperation);
 };
 
 let aditionBtn = document.querySelector('.sum button');
@@ -326,56 +329,51 @@ let multBtn = document.querySelector('.multiplication button');
 aditionBtn.addEventListener('click', storeAdd);
 
 function storeAdd() {
-    storedOperationClick = add;
+    storedOperation = add;
     accumulator();
 };
 
 subtrBtn.addEventListener('click', storeSub);
 
 function storeSub() {
-    storedOperationClick = subtract;
+    storedOperation = subtract;
     accumulator();
 };
 
 divideBtn.addEventListener('click', storeDiv);
 
 function storeDiv() {
-    storedOperationClick = divide;
+    storedOperation = divide;
     accumulator();
 };
 
 multBtn.addEventListener('click', storeMult);
 
 function storeMult() {
-    storedOperationClick = multiply;
+    storedOperation = multiply;
     accumulator();
 };
 
 function equals() {
+    console.log(storedOperation);
+    console.log(storedNumber1);
+    console.log(storedNumber2)
     if (storedOperation == 0) {
-        number = number;
-        screenNumber.textContent = number.join('');
-        screen.appendChild(screenNumber);
-    } else if(storedResult == 0) {
-        storedNumber2 = Number(number.join(''));
-        number = [];
-        storedResult = storedOperation(storedNumber1, storedNumber2);
-     //   let result = storedResult.toString();
+        storedResult = Number(number.join(''));
         screenNumber.textContent = storedResult;
         screen.appendChild(screenNumber);
-        storedOperation = 0;
-        storedNumber1 = 0;
-        storedNumber2 = 0;
-    } else {
+    } else if(storedOperation != 0) {
         storedNumber2 = Number(number.join(''));
         number = [];
         storedResult = storedOperation(storedNumber1, storedNumber2);
         screenNumber.textContent = storedResult;
         screen.appendChild(screenNumber);
-        storedOperation = 0;
-        storedNumber1 = 0;
-        storedNumber2 = 0;
+    } else if (storedOperation != 0 && storedNumber2 != 0) {
+        storedNumber2 = Number(number.join(''));
+        storedResult = 0;
+        storedResult = storedOperation(storedNumber1, storedNumber2);
+        screenNumber.textContent = storedResult;
+        screen.appendChild(screenNumber);
     }
-    console.log(number);
     console.log(storedResult);
 };
