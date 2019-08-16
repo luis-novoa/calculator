@@ -57,9 +57,7 @@ for (let i = 0; i < buttons.length; i++) {
         });
     } else if (buttons[i].textContent == '=') {
         buttons[i].addEventListener('click', () => {
-            postEquals = 1;
             equals();
-            //console.log(postEquals);
         });
         buttons[i].addEventListener('mouseover', (e) => {
             buttons[i].classList.add('mouseoverBright');
@@ -240,6 +238,8 @@ let number = []; //max: 24
                     screenNumber.textContent = 0;
                     screen.appendChild(screenNumber);
                 };*/
+let postEquals = 0;
+let illegal = 0;
 function screenPlay(value) {
     for (i = 0; i < number.length; i++){
         if (value == '.' && number[i] == '.') {
@@ -259,6 +259,13 @@ function screenPlay(value) {
         screenNumber.textContent = 0;
         screen.appendChild(screenNumber);
     };
+    if (postEquals == 1) {
+        storedResult1 = 0;
+        postEquals = 0;
+    }
+    if (illegal == 1) {
+        illegal = 0;
+    }
     value = Array.from(value);
     value.forEach(element => {
         numberPushInput(element);
@@ -269,7 +276,6 @@ function screenPlay(value) {
     screenNumber.textContent = number.join('');
     screen.appendChild(screenNumber);
   //  stopper = 0;
-    console.log(number)
 };
 
 function clear(){
@@ -303,11 +309,30 @@ backspaceBtn.addEventListener('click', backspace);
 
 let storedNumber1 = 0;
 let storedNumber2 = 0;
-let storedOperation = 0;
-let storedResult = 0;
+let currentOperation = 0;
+let storedOperation1 = 0;
+let storedOperation2 = 0;
+let storedResult1 = 0;
+let storedResult2 = 0
 
 function accumulator() {
-
+    illegal = 1;
+    if (storedNumber1 == 0 && storedResult1 == 0) {
+        storedNumber1 = Number(number.join(''));
+        number = [];
+        storedOperation1 = currentOperation;
+    } else if (storedResult1 != 0 && storedOperation1 == 0) {
+        storedNumber1 = storedResult1;
+        storedResult1 = 0;
+        storedOperation1 = currentOperation;
+    } else if (storedOperation1 != 0) {
+        storedOperation2 = currentOperation;
+        storedNumber2 = Number(number.join(''));
+        number = [];
+        illegal = 0;
+        equals();
+        illegal = 1;
+    }
 };
 
 let aditionBtn = document.querySelector('.sum button');
@@ -318,31 +343,55 @@ let multBtn = document.querySelector('.multiplication button');
 aditionBtn.addEventListener('click', storeAdd);
 
 function storeAdd() {
-    storedOperation = add;
+    currentOperation = add;
     accumulator();
 };
 
 subtrBtn.addEventListener('click', storeSub);
 
 function storeSub() {
-    storedOperation = subtract;
+    currentOperation = subtract;
     accumulator();
 };
 
 divideBtn.addEventListener('click', storeDiv);
 
 function storeDiv() {
-    storedOperation = divide;
+    currentOperation = divide;
     accumulator();
 };
 
 multBtn.addEventListener('click', storeMult);
 
 function storeMult() {
-    storedOperation = multiply;
+    currentOperation = multiply;
     accumulator();
 };
 
 function equals() {
-
+    if (illegal != 0 && storedNumber2 == 0 && storedResult1 == 0) {
+        storedNumber1 = storedNumber1;
+        illegal = 0;
+        currentOperation = 0;
+    } else if (storedOperation1 != 0 && storedOperation2 == 0) {
+        storedNumber2 = Number(number.join(''));
+        number = [];
+        storedResult1 = storedOperation1(storedNumber1, storedNumber2);
+        screenNumber.textContent = storedResult1.toString();
+        screen.appendChild(screenNumber);
+        currentOperation = 0;
+        storedNumber1 = 0;
+        storedOperation1 = 0;
+        storedNumber2 = 0;
+        postEquals = 1;
+    } else if (storedOperation1 != 0 && storedOperation2 != 0) {
+        storedNumber1 = storedOperation1(storedNumber1, storedNumber2);
+        storedResult1 = storedNumber1;
+        screenNumber.textContent = storedResult1.toString();
+        screen.appendChild(screenNumber);
+        storedNumber2 = 0;
+        storedOperation1 = storedOperation2;
+        storedOperation2 = 0;
+        currentOperation = 0;
+    }
 };
