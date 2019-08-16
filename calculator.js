@@ -357,7 +357,8 @@ function equals() {
         storedOperation = 0;
         storedNumber1 = 0;
         storedNumber2 = 0;
-        clear();
+        number = [];     
+        screenNumber.textContent = '0';
     } else {
         let result = storedOperation(storedNumber1, storedNumber2);
         result = result.toString();
@@ -368,12 +369,11 @@ function equals() {
             storedOperation = 0;
             storedNumber1 = 0;
             storedNumber2 = 0;
-            number = [];
         } else {
             storedOperation = 0;
-            storedNumber1 = result;
-            storedNumber2 = 0;
-            clear();
+            storedNumber1 = 0;
+            storedNumber2 = 0;    
+            number.push(result);
         }
     }
     console.log(number);
