@@ -1,7 +1,7 @@
 body {
     margin: 40px auto;
-    width: fit-content;
-    height: fit-content
+    width: 470px;
+    height: 391px;
 }
 
 html {
@@ -9,10 +9,10 @@ html {
     
 }
 
-
 button {
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
+    background: rgba(237, 234, 234, 0.59);
+    width: 100px;
+    height: 50px;
     border: none;
     border-radius: 5px;
     font-size: larger;
@@ -53,8 +53,12 @@ button {
     grid-area: 2 / 1 / 2 / span 4;
     grid: 50px / repeat(4, 100px);
     grid-gap: 2px 2px;
-    align-content: end;
     margin-top: 20px;
+}
+
+.whipe button {
+    width: 202px;
+    height: 50px;
 }
 
 .backspace {
