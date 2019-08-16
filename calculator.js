@@ -307,6 +307,7 @@ backspaceBtn.addEventListener('click', backspace);
 
 let storedNumber1 = 0;
 let storedNumber2 = 0;
+let num2Helper = 0;
 let storedOperationClick = 0;
 let storedOperation = 0;
 let storedResult = 0;
@@ -314,31 +315,38 @@ let storedResult = 0;
 function accumulator() {
     storedNumber1 = 0; // 1
     storedNumber2 = 0; //
-    if (storedResult == 0 && storedNumber1 == 0){
+    if (storedResult == 0 && storedNumber1 == 0){ //vindo por aqui
         storedNumber1 = Number(number.join(''));
         number=[];
         screenNumber.textContent = storedNumber1;
         screen.appendChild(screenNumber);
         storedOperationClick = 1;
+       // console.log(storedNumber1);
+       // console.log(storedNumber2);
     } else if (storedNumber1 != 0 && storedNumber2 != 0) {
         equals();
         storedNumber1 = Number(number.join(''));
         number = [];
+      //  console.log(storedNumber1);
+      //  console.log(storedNumber2);
     }else if (storedResult != 0) {
         storedNumber1 = storedResult;
         storedNumber2 = Number(number.join(''));
+     //   console.log(storedNumber1);
+     //   console.log(storedNumber2);
         number = [];
     } else if (storedOperationClick != 0) {
         if (storedNumber1 == 0) {
             storedNumber1 = storedResult;
         }
         storedNumber2 = Number(number.join(''));
+     //   console.log(storedNumber1);
+     //   console.log(storedNumber2);
         number = [];
         equals();
         storedOperationClick = 1;
     }
-    console.log(storedNumber1);
-    console.log(storedNumber2);
+
 };
 
 let aditionBtn = document.querySelector('.sum button');
@@ -392,12 +400,16 @@ function equals() {
    //     storedNumber1 = 0;
         storedOperation = 0;
         storedOperationClick = 0
+        console.log(storedNumber1);
+        console.log(storedNumber2);
     } else if (storedOperation != 0 && storedNumber2 != 0) {
         storedResult = 0;
         storedResult = storedOperation(storedNumber1, storedNumber2);
         screenNumber.textContent = storedResult;
         screen.appendChild(screenNumber);
         storedOperation = 0;
+        console.log(storedNumber1);
+        console.log(storedNumber2);
     }
     console.log(storedResult);
 };
