@@ -200,7 +200,7 @@ let screenNumber = document.querySelector('p');
 let number = []; //max: 24
 
  function numberPushInput(x) {
-    if (number.length < 25) {
+    if (number.length <= 23) {
         number.push(x);
     } else {
         alert('Number cap reached!');
@@ -208,36 +208,56 @@ let number = []; //max: 24
 }; 
 
 // arredondamento de resultados!
-/* function numberPushResult(x) {
-    if (x.length <= 25)
-    number.forEach((element, index) => {
-        if (element == '.') {
-            if (index == 23) {
-                
-                
-            }
-            for (i = number.length; i >= index; i-- ) {
-                let dec = number[i - 1] + '.' + number[i];
-                dec = Number(dec);
-                dec = Math.round(dec);
-                if (dec < 10) {
-                    number.pop();
-                    number.pop();
-                    dec.toString();
-                    number.push(dec);
-                    break;
-                } else {
-                    number.pop();
-                }
-            }
-        }
-    });
-} 
-
-                if (storedResult != 0) {
-                    screenNumber.textContent = 0;
+function numberPushResult(x) {
+    x = x.toString();
+    x = Array.from(x);
+    if (x.length <= 23) {
+        x = x.join('')
+        screenNumber.textContent = x;
+        screen.appendChild(screenNumber);
+    } else if (x.length > 23){
+        x.forEach((element, index) => {
+            if (element == '.') {
+                if (index == 20) {
+                    x = Number(x.join(''));
+                    x = Math.round(x);
+                    x = x.toString();
+                    screenNumber.textContent = x;
                     screen.appendChild(screenNumber);
-                };*/
+                } else {
+                    for (i = element.length; i > 23; i-- ) {
+                        let dec = 0;
+                        if (element[i-1] == '.') {
+                            dec = element[i-2] + element[i-1] + element[i]
+                        } else {
+                            dec = element[i - 1] + '.' + element[i];
+                        }
+                        dec = Number(dec);
+                        dec = Math.round(dec);
+                        if (dec < 10) {
+                            element.pop();
+                            element.pop();
+                            dec.toString();
+                            element.push(dec);
+                        } else if (dec == 10){
+                            element.pop();
+                            element.pop();
+                            dec = '1';
+                            element.push(dec);
+                        }
+                    };
+                    screenNumber.textContent = x;
+                    screen.appendChild(screenNumber);
+                };
+            } 
+        });
+    } else if (element != '.' && index > 23) {
+        x = x.join('');
+        alert('The result is too large! Full result: ' + x + '.')
+        clear();
+    };
+}; 
+
 let postEquals = 0;
 let illegal = 0;
 function screenPlay(value) {
@@ -267,15 +287,15 @@ function screenPlay(value) {
         illegal = 0;
     }
     value = Array.from(value);
-    value.forEach(element => {
-        numberPushInput(element);
-    });
     if (number.length == 25) {
         value = '';
+    } else {
+        value.forEach(element => {
+            numberPushInput(element);
+        });
     }
     screenNumber.textContent = number.join('');
     screen.appendChild(screenNumber);
-  //  stopper = 0;
 };
 
 function clear(){
@@ -377,8 +397,7 @@ function equals() {
         storedNumber2 = Number(number.join(''));
         number = [];
         storedResult1 = storedOperation1(storedNumber1, storedNumber2);
-        screenNumber.textContent = storedResult1.toString();
-        screen.appendChild(screenNumber);
+        numberPushResult(storedResult1);
         currentOperation = 0;
         storedNumber1 = 0;
         storedOperation1 = 0;
@@ -387,8 +406,7 @@ function equals() {
     } else if (storedOperation1 != 0 && storedOperation2 != 0) {
         storedNumber1 = storedOperation1(storedNumber1, storedNumber2);
         storedResult1 = storedNumber1;
-        screenNumber.textContent = storedResult1.toString();
-        screen.appendChild(screenNumber);
+        numberPushResult(storedResult1);
         storedNumber2 = 0;
         storedOperation1 = storedOperation2;
         storedOperation2 = 0;
