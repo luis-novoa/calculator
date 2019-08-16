@@ -21,6 +21,7 @@ function divide (num1, num2) {
 
 let postEquals = 0;
 let postOperator = 0;
+let stopper = 0;
 
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
@@ -268,6 +269,7 @@ function screenPlay(value) {
     }
     screenNumber.textContent += value.join('');
     screen.appendChild(screenNumber);
+    stopper = 0;
     console.log(number)
 }
 
@@ -281,6 +283,7 @@ function clear(){
     storedNumber2 = 0;
     storedOperationClick = 0;
     storedOperation = 0;
+    stopper = 0;
 }
 
 function backspace() {
@@ -305,6 +308,7 @@ let storedOperation = 0;
 
 function accumulator() {
     postOperator = 1;
+    stopper = 1;
     if (storedOperation == 0){
         storedNumber1 = Number(number.join(''));
         number=[];
@@ -354,11 +358,9 @@ function equals() {
     console.log(storedNumber2);
     number = [];
     if (storedOperation == 0) {
-        storedOperation = 0;
-        storedNumber1 = 0;
-        storedNumber2 = 0;
-        number = [];     
-        screenNumber.textContent = '0';
+        clear();
+    } else if (stopper == 1){
+        clear();
     } else {
         let result = storedOperation(storedNumber1, storedNumber2);
         result = result.toString();
@@ -379,4 +381,5 @@ function equals() {
     console.log(number);
 };
 
-
+/* console.log(postEquals);
+console.log(postOperator) */
