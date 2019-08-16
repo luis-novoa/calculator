@@ -19,10 +19,6 @@ function divide (num1, num2) {
     }
 };
 
-let postEquals = 0;
-let postOperator = 0;
-let stopper = 0;
-
 let numpad = document.querySelector('.numpad');
 numpad.numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, '=', 0, '.'];
 
@@ -33,6 +29,7 @@ for (let i = 0; i < 12; i++) {
     numBtn.innerHTML = numpad.numbers[i];
     if (Number(numpad.numbers[i]) >= 0){
         numBtn.classList.add('btn' + numpad.numbers[i]);
+        
     } else {
         numBtn.classList.add('brightWeirdo');
     }
@@ -237,7 +234,12 @@ let number = []; //max: 24
             }
         }
     });
-} */
+} 
+
+                if (storedResult != 0) {
+                    screenNumber.textContent = 0;
+                    screen.appendChild(screenNumber);
+                };*/
 function screenPlay(value) {
     for (i = 0; i < screenNumber.textContent.length; i++){
         if (value == '.' && screenNumber.textContent[i] == '.') {
@@ -252,14 +254,7 @@ function screenPlay(value) {
         screenNumber.textContent = '';
     } else if ( screenNumber.textContent == 0 && screenNumber.textContent[1] != '.') {
         screenNumber.textContent = '';
-    } else if (postEquals == 1) {
-        postEquals = 0;
-        screenNumber.textContent = '';
-    } else if (postOperator == 1) {
-        postOperator = 0;
-        screenNumber.textContent = '';
-    };
-    //console.log(postEquals);
+    }
     value = Array.from(value);
     value.forEach(element => {
         numberPushInput(element);
@@ -267,11 +262,11 @@ function screenPlay(value) {
     if (number.length == 25) {
         value = '';
     }
-    screenNumber.textContent += value.join('');
+    screenNumber.textContent = number.join('');
     screen.appendChild(screenNumber);
-    stopper = 0;
+  //  stopper = 0;
     console.log(number)
-}
+};
 
 function clear(){
     number = [];
@@ -281,6 +276,7 @@ function clear(){
     postOperator = 0;
     storedNumber1 = 0;
     storedNumber2 = 0;
+    storedResult = 0;
     storedOperationClick = 0;
     storedOperation = 0;
     stopper = 0;
@@ -305,18 +301,20 @@ let storedNumber1 = 0;
 let storedNumber2 = 0;
 let storedOperationClick = 0;
 let storedOperation = 0;
+let storedResult = 0;
 
 function accumulator() {
-    postOperator = 1;
-    stopper = 1;
-    if (storedOperation == 0){
+    storedOperation = storedOperationClick;
+    storedOperationClick = 0;
+    if (storedResult == 0){
         storedNumber1 = Number(number.join(''));
         number=[];
-        console.log(storedNumber1);
-        storedOperation = storedOperationClick;;
+        screenNumber.textContent = '0';
+        screen.appendChild(screenNumber);
     } else {
+        storedNumber1 = storedResult;
+        number=[];
         equals();
-        storedOperation = storedOperationClick;
     }
 };
 
@@ -354,32 +352,30 @@ function storeMult() {
 };
 
 function equals() {
-    storedNumber2 = Number(number.join(''));
-    console.log(storedNumber2);
-    number = [];
     if (storedOperation == 0) {
-        clear();
-    } else if (stopper == 1){
-        clear();
-    } else {
-        let result = storedOperation(storedNumber1, storedNumber2);
-        result = result.toString();
-        screenNumber.textContent = result;
+        number = number;
+        screenNumber.textContent = number.join('');
         screen.appendChild(screenNumber);
-        if (postOperator == 0) {
-            number.push(result);
-            storedOperation = 0;
-            storedNumber1 = 0;
-            storedNumber2 = 0;
-        } else {
-            storedOperation = 0;
-            storedNumber1 = 0;
-            storedNumber2 = 0;    
-            number.push(result);
-        }
+    } else if(storedResult == 0) {
+        storedNumber2 = Number(number.join(''));
+        number = [];
+        storedResult = storedOperation(storedNumber1, storedNumber2);
+     //   let result = storedResult.toString();
+        screenNumber.textContent = storedResult;
+        screen.appendChild(screenNumber);
+        storedOperation = 0;
+        storedNumber1 = 0;
+        storedNumber2 = 0;
+    } else {
+        storedNumber2 = Number(number.join(''));
+        number = [];
+        storedResult = storedOperation(storedNumber1, storedNumber2);
+        screenNumber.textContent = storedResult;
+        screen.appendChild(screenNumber);
+        storedOperation = 0;
+        storedNumber1 = 0;
+        storedNumber2 = 0;
     }
     console.log(number);
+    console.log(storedResult);
 };
-
-/* console.log(postEquals);
-console.log(postOperator) */
