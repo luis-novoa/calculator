@@ -2,8 +2,6 @@
 
 Development of a calculator for javascript skills training. Task assigned by [The Odin Project](https://www.theodinproject.com/courses/web-development-101/lessons/calculator). The result can be seen in [this live webpage](https://luis-novoa.github.io/calculator/).
 
-Check the video with the overview of the project:
-
 ![Calculator Preview](./readme-imgs/calc.png)
 
 ## Built With
